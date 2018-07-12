@@ -12,16 +12,25 @@
   "require": {
     "illuminate/support": "~5.4.36",
     "opentracing/opentracing": "^1.0.0-beta5",
-    "paragonie/random_compat": "^2"
+    "paragonie/random_compat": "^2",
+    "php-coveralls/php-coveralls": "^2.1"
   },
   "autoload": {
     "psr-4": {
       "LaravelOpenTracing\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "LaravelOpenTracing\\Tests\\": "tests/"
+    }
+  },
   "config": {
     "sort-packages": true
   },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "require-dev": {
+    "phpunit/phpunit": "~5.7.27"
+  }
 }
