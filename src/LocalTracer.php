@@ -11,6 +11,7 @@ namespace LaravelOpenTracing;
 use OpenTracing\SpanContext;
 use OpenTracing\StartSpanOptions;
 use OpenTracing\Tracer;
+use OpenTracing\Formats;
 
 final class LocalTracer implements Tracer
 {
@@ -77,7 +78,21 @@ final class LocalTracer implements Tracer
 
     public function inject(SpanContext $spanContext, $format, &$carrier)
     {
-        // TODO
+        switch ($format) {
+            case Formats\TEXT_MAP:
+            case Formats\BINARY:
+                $carrier = [
+                    "Trace-Id" => $spanContext->getTraceId(),
+                    "Span-Id" => $spanContext->getSpanId(),
+                ];
+                break;
+            case Formats\HTTP_HEADERS:
+                $carrier = [
+                    "Trace-Id: ".$spanContext->getTraceId(),
+                    "Span-Id: ".$spanContext->getSpanId(),
+                ];
+                break;
+        }
     }
 
     public function extract($format, $carrier)
